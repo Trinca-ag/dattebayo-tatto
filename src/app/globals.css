@@ -1,26 +1,273 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ─────────────────────────────────────────────────────────────────────────────
+   Design tokens — Dattebayo Tattoo
+   Paleta e tipografia do estúdio. Tudo que é reutilizado vira token; cores por
+   artista (`--accent`) entram inline no elemento, porque são dados, não tema.
+   ───────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* superfícies, do fundo da página ao campo de formulário */
+  --color-ink: #0a0a0b;
+  --color-ink-soft: #0c0c0e;
+  --color-panel: #0f0f11;
+  --color-surface: #111113;
+  --color-field: #16161a;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* texto, do mais forte ao mais apagado */
+  --color-bone: #f5f5f2;
+  --color-bone-soft: #e7e7ea;
+  --color-mist: #c9c9ce;
+  --color-ash: #9c9ca3;
+  /* O protótipo usava #6E6E75, que rende 3.91:1 sobre o fundo — abaixo dos 4.5:1
+     da WCAG AA, e este tom carrega texto de conteúdo (telefone, endereço, horário).
+     #787880 dá 4.52:1 com diferença visual praticamente imperceptível. */
+  --color-dim: #787880;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* laranja da marca */
+  --color-brand: #ff5c00;
+  --color-brand-light: #ff7a1a;
+  --color-brand-deep: #ff2e00;
+
+  /* estados */
+  --color-open: #38ff9c;
+  --color-alert: #ff8a6e;
+
+  /* famílias — os valores das variáveis vêm do next/font em layout.tsx */
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
+  --font-jp: var(--font-zen-kaku), var(--font-space-grotesk), sans-serif;
+
+  /* animações reutilizadas entre páginas */
+  --animate-marquee: dbMarquee 26s linear infinite;
+  --animate-pulse-ring: dbPulse 2.6s ease-out infinite;
+  --animate-float: dbFloat 1.6s ease-in-out infinite;
+  --animate-slide-bar: dbSlide 9s linear infinite;
+  --animate-fade-up: dbIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-neon: dbNeon 7.5s linear infinite;
+  --animate-orb: dbOrbA 30s ease-in-out infinite alternate;
+  --animate-cta-glow: dbCtaGlow 22s ease-in-out infinite alternate;
+  --animate-shine: dbShine 4.6s ease-in-out infinite;
+  --animate-fade-in: dbFadeIn 0.22s ease;
+
+  @keyframes dbFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes dbMarquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes dbPulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgb(255 92 0 / 0.55);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgb(255 92 0 / 0);
+    }
+  }
+  @keyframes dbFloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(9px);
+    }
+  }
+  @keyframes dbSlide {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+  @keyframes dbIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  /* Letreiro de neon com falha — o 刺青 gigante de /tatuadores.
+     Continua sendo ornamento de fundo: o teto de brilho é o ponto em que o kanji
+     ainda passa por trás do h1 sem disputar leitura com ele. */
+  @keyframes dbNeon {
+    0%,
+    10%,
+    14%,
+    26%,
+    100% {
+      color: rgb(255 122 26 / 0.26);
+      text-shadow:
+        0 0 18px rgb(255 92 0 / 0.5),
+        0 0 60px rgb(255 92 0 / 0.3);
+    }
+    11%,
+    13% {
+      color: rgb(255 122 26 / 0.09);
+      text-shadow: none;
+    }
+    27%,
+    28.5% {
+      color: rgb(255 122 26 / 0.09);
+      text-shadow: none;
+    }
+    29%,
+    31% {
+      color: rgb(255 122 26 / 0.34);
+      text-shadow:
+        0 0 22px rgb(255 92 0 / 0.6),
+        0 0 70px rgb(255 92 0 / 0.34);
+    }
+    31.6%,
+    32.6% {
+      color: rgb(255 122 26 / 0.1);
+      text-shadow: none;
+    }
+    62%,
+    63% {
+      color: rgb(255 122 26 / 0.14);
+      text-shadow: 0 0 12px rgb(255 92 0 / 0.24);
+    }
+  }
+  @keyframes dbOrbA {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    100% {
+      transform: translate3d(-3%, 2%, 0) scale(1.08);
+    }
+  }
+  @keyframes dbCtaGlow {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 0.85;
+    }
+    100% {
+      transform: translate3d(4%, -3%, 0) scale(1.14);
+      opacity: 1;
+    }
+  }
+  @keyframes dbShine {
+    0% {
+      transform: translateX(-130%);
+    }
+    55%,
+    100% {
+      transform: translateX(230%);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* O header é fixo: sem isto, âncoras e elementos focados por Shift+Tab param
+       debaixo dele. 96px cobre a altura de 78px em repouso mais uma folga. */
+    scroll-padding-top: 96px;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-brand);
+    color: var(--color-ink);
+  }
+
+  /* Anel de foco visível em toda a navegação por teclado. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-light);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer utilities {
+  /* Carrossel/scroller sem barra visível, mantendo o scroll nativo. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Texto em degradê laranja (títulos do hero). */
+  .text-gradient-brand {
+    background: linear-gradient(120deg, var(--color-brand-light), var(--color-brand-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Fundo padrão dos botões e badges da marca. */
+  .bg-brand-gradient {
+    background: linear-gradient(135deg, var(--color-brand-light), var(--color-brand));
+  }
+
+  /* Malha quadriculada usada como fachada estática do mapa. */
+  .bg-map-grid {
+    background:
+      repeating-linear-gradient(0deg, #111113, #111113 22px, #0d0d0f 22px, #0d0d0f 23px),
+      repeating-linear-gradient(90deg, #111113, #111113 22px, #0d0d0f 22px, #0d0d0f 23px);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Reveal on scroll
+   O estado escondido só é aplicado depois que o JS marca `data-reveal="out"`,
+   então sem JS (ou antes da hidratação) o conteúdo continua visível e legível.
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-reveal] {
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+}
+[data-reveal="out"] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+[data-reveal="in"] {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal="out"] {
+    opacity: 1;
+    transform: none;
+  }
 }

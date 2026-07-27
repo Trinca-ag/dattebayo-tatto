@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "image-sizes": "node scripts/image-sizes.mjs",
+    "jp-font": "node scripts/jp-font-subset.mjs"
   },
   "dependencies": {
     "next": "16.2.12",
