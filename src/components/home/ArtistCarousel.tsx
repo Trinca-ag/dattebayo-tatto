@@ -6,7 +6,7 @@ import { ArtistCard } from "@/components/ui/ArtistCard";
 import { GhostCta } from "@/components/ui/CtaLink";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
-import { ChevronIcon } from "@/components/ui/icons";
+import { ChevronIcon, SwipeIcon } from "@/components/ui/icons";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { ARTISTS, ARTIST_COUNT } from "@/lib/artists";
 
@@ -200,8 +200,9 @@ export function ArtistCarousel() {
         </GhostCta>
       </Reveal>
 
-      <div className="mx-auto mt-3.5 flex max-w-[1280px] items-center justify-between gap-4 px-[clamp(18px,4vw,40px)]">
-        <span className="text-dim font-mono text-[10px] leading-none font-bold tracking-[.16em]">
+      <div className="mx-auto mt-3.5 flex max-w-[1280px] items-center justify-end gap-4 px-[clamp(18px,4vw,40px)] sm:justify-between">
+        {/* No mobile, a dica de arrasto vira a animação embaixo do carrossel. */}
+        <span className="text-dim font-mono hidden text-[10px] leading-none font-bold tracking-[.16em] sm:block">
           ◂ ARRASTE PARA EXPLORAR ▸
         </span>
         <div aria-hidden="true" className="flex shrink-0 gap-[5px]">
@@ -241,7 +242,7 @@ export function ArtistCarousel() {
           type="button"
           onClick={() => navigate(-1)}
           aria-label="Artistas anteriores"
-          className="text-bone hover:text-brand-light absolute top-[22px] bottom-[30px] left-0 z-4 flex w-[clamp(38px,4vw,52px)] cursor-pointer items-center justify-center rounded-r-[14px] border-0 bg-[rgba(10,10,11,.66)] p-0 backdrop-blur-[3px] transition-[background-color,color] duration-250 hover:bg-[rgba(10,10,11,.9)]"
+          className="text-bone hover:text-brand-light absolute top-[22px] bottom-[30px] left-0 z-4 hidden w-[clamp(38px,4vw,52px)] cursor-pointer items-center justify-center sm:flex rounded-r-[14px] border-0 bg-[rgba(10,10,11,.66)] p-0 backdrop-blur-[3px] transition-[background-color,color] duration-250 hover:bg-[rgba(10,10,11,.9)]"
         >
           <ChevronIcon dir="left" />
         </button>
@@ -249,10 +250,23 @@ export function ArtistCarousel() {
           type="button"
           onClick={() => navigate(1)}
           aria-label="Próximos artistas"
-          className="text-bone hover:text-brand-light absolute top-[22px] right-0 bottom-[30px] z-4 flex w-[clamp(38px,4vw,52px)] cursor-pointer items-center justify-center rounded-l-[14px] border-0 bg-[rgba(10,10,11,.66)] p-0 backdrop-blur-[3px] transition-[background-color,color] duration-250 hover:bg-[rgba(10,10,11,.9)]"
+          className="text-bone hover:text-brand-light absolute top-[22px] right-0 bottom-[30px] z-4 hidden w-[clamp(38px,4vw,52px)] cursor-pointer items-center justify-center sm:flex rounded-l-[14px] border-0 bg-[rgba(10,10,11,.66)] p-0 backdrop-blur-[3px] transition-[background-color,color] duration-250 hover:bg-[rgba(10,10,11,.9)]"
         >
           <ChevronIcon dir="right" />
         </button>
+      </div>
+
+      {/* Dica de arrasto embaixo e centralizada; só no mobile (o desktop usa as setas). */}
+      <div
+        aria-hidden="true"
+        className="mt-1 flex items-center justify-center gap-2.5 px-[clamp(18px,4vw,40px)] sm:hidden"
+      >
+        <span className="inline-flex w-9 shrink-0 justify-center">
+          <SwipeIcon size={22} className="text-brand-light animate-swipe" />
+        </span>
+        <span className="text-dim font-mono text-[10px] leading-none font-bold tracking-[.16em]">
+          ARRASTE PARA O LADO
+        </span>
       </div>
     </section>
   );

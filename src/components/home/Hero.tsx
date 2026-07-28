@@ -148,13 +148,13 @@ export function Hero() {
         {/* As três linhas são `span` em bloco: `div` dentro de `h1` é HTML inválido. */}
         <h1 className="font-display text-[clamp(44px,9.2vw,116px)] leading-[.9] font-bold tracking-[-.035em] uppercase">
           <Reveal as="span" delay={60} className="block">
-            Tatuagem
+            Sua pele
           </Reveal>
           <Reveal as="span" delay={150} className="block">
-            para quem
+            nossa
           </Reveal>
           <Reveal as="span" delay={240} className="text-gradient-brand block">
-            vive anime
+            obra-prima
           </Reveal>
         </h1>
 

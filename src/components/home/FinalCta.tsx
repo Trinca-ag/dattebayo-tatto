@@ -1,5 +1,6 @@
 import { SolidCta } from "@/components/ui/CtaLink";
 import { Reveal } from "@/components/ui/Reveal";
+import { StudioMap } from "@/components/ui/StudioMap";
 import { INFO, waLink } from "@/lib/site";
 
 /** Fechamento da home: kanji gigante, CTA do WhatsApp e o mini-mapa que abre o Google Maps. */
@@ -43,23 +44,18 @@ export function FinalCta() {
           <span>Ter–Sáb · 11h–18h30</span>
         </div>
 
-        <a
-          href={INFO.maps}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mx-auto mt-[26px] block max-w-[520px] no-underline"
-        >
-          <div className="bg-map-grid relative h-[120px] overflow-hidden rounded-2xl border border-white/12">
-            <div
-              aria-hidden="true"
-              className="bg-brand absolute top-1/2 left-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-[0_0_0_6px_rgba(255,92,0,.25)]"
-            />
-            <div className="text-bone-soft absolute inset-x-0 bottom-0 flex items-center justify-between bg-[linear-gradient(to_top,rgba(10,10,11,.9),transparent)] px-3.5 py-2.5 text-[12.5px]">
-              <span>Como chegar</span>
-              <span className="text-brand-light">Abrir no Google Maps ↗</span>
-            </div>
-          </div>
-        </a>
+        <div className="relative mx-auto mt-[26px] h-[150px] max-w-[520px] overflow-hidden rounded-2xl border border-white/12 bg-black">
+          <StudioMap />
+          <a
+            href={INFO.maps}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-bone-soft absolute inset-x-0 bottom-0 flex items-center justify-between bg-[linear-gradient(to_top,rgba(10,10,11,.92),transparent)] px-3.5 py-2.5 text-[12.5px] no-underline"
+          >
+            <span>Como chegar</span>
+            <span className="text-brand-light">Abrir no Google Maps ↗</span>
+          </a>
+        </div>
       </Reveal>
     </section>
   );

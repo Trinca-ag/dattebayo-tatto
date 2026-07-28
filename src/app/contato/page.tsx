@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { BookingForm } from "@/components/contato/BookingForm";
 import { WhatsAppFab } from "@/components/layout/WhatsAppFab";
 import { Faq } from "@/components/contato/Faq";
-import { MapFacade } from "@/components/contato/MapFacade";
 import { GhostCta, SolidCta } from "@/components/ui/CtaLink";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { OpenBadge } from "@/components/ui/OpenBadge";
 import { Reveal } from "@/components/ui/Reveal";
+import { StudioMap } from "@/components/ui/StudioMap";
 import { WhatsAppIcon } from "@/components/ui/icons";
 import { ARTIST_COUNT } from "@/lib/artists";
 import { INFO, SITE_URL, waLink } from "@/lib/site";
@@ -136,7 +136,9 @@ export default function ContatoPage() {
               </div>
             </div>
 
-            <MapFacade />
+            <div className="h-[180px] w-full overflow-hidden rounded-[18px] border border-white/10 bg-black">
+              <StudioMap />
+            </div>
           </Reveal>
         </div>
       </section>

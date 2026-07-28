@@ -49,6 +49,7 @@
   --animate-cta-glow: dbCtaGlow 22s ease-in-out infinite alternate;
   --animate-shine: dbShine 4.6s ease-in-out infinite;
   --animate-fade-in: dbFadeIn 0.22s ease;
+  --animate-swipe: dbSwipe 1.5s ease-in-out infinite;
 
   @keyframes dbFadeIn {
     from {
@@ -172,6 +173,16 @@
       transform: translateX(230%);
     }
   }
+  /* Vaivém horizontal do dedo: dica de que o carrossel mobile é arrastável. */
+  @keyframes dbSwipe {
+    0%,
+    100% {
+      transform: translateX(-7px);
+    }
+    50% {
+      transform: translateX(7px);
+    }
+  }
 }
 
 @layer base {
@@ -237,13 +248,6 @@
   /* Fundo padrão dos botões e badges da marca. */
   .bg-brand-gradient {
     background: linear-gradient(135deg, var(--color-brand-light), var(--color-brand));
-  }
-
-  /* Malha quadriculada usada como fachada estática do mapa. */
-  .bg-map-grid {
-    background:
-      repeating-linear-gradient(0deg, #111113, #111113 22px, #0d0d0f 22px, #0d0d0f 23px),
-      repeating-linear-gradient(90deg, #111113, #111113 22px, #0d0d0f 22px, #0d0d0f 23px);
   }
 }
 

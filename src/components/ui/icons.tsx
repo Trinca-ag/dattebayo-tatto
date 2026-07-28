@@ -52,6 +52,39 @@ export function StrokeIcon({ d, size = 24, className }: IconProps & { d: string 
   );
 }
 
+/** Mão/dedo de toque — usada no aviso de arrastar do carrossel mobile. */
+export function SwipeIcon({ size = 22, className }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={className}
+    >
+      {/* arcos de movimento nas laterais, sugerindo o vaivém */}
+      <path
+        d="M4 8C5.1 6.6 6.6 5.7 8.4 5.4"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        opacity={0.45}
+      />
+      <path
+        d="M20 8C18.9 6.6 17.4 5.7 15.6 5.4"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        opacity={0.45}
+      />
+      {/* dedo indicador + mão */}
+      <rect x="10.6" y="3.5" width="2.8" height="11" rx="1.4" fill="currentColor" />
+      <rect x="7" y="11" width="10" height="10" rx="4.5" fill="currentColor" />
+    </svg>
+  );
+}
+
 export function ChevronIcon({ dir, size = 26 }: { dir: "left" | "right"; size?: number }) {
   return (
     <svg

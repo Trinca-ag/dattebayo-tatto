@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
+import { SwipeIcon } from "@/components/ui/icons";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const STEPS = [
@@ -94,12 +95,13 @@ export function Process() {
             aria-hidden="true"
             className="absolute top-[14px] left-0 h-0.5 w-0 bg-[linear-gradient(90deg,var(--color-brand),var(--color-brand-deep))] shadow-[0_0_12px_rgba(255,92,0,.6)] transition-[width] duration-150 ease-linear"
           />
+          {/* Mobile: carrossel horizontal com snap (swipe nativo). sm+: volta ao grid. */}
           <Reveal
             delay={80}
-            className="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-x-5 gap-y-[26px]"
+            className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] sm:gap-x-5 sm:gap-y-[26px] sm:overflow-visible sm:pb-0"
           >
             {STEPS.map((step) => (
-              <div key={step.n}>
+              <div key={step.n} className="flex-[0_0_78%] snap-start sm:flex-none">
                 <div className="border-brand bg-ink text-brand-light font-mono mb-[18px] flex h-[30px] w-[30px] items-center justify-center rounded-full border-2 text-[11px] leading-none font-bold">
                   {step.n}
                 </div>
@@ -108,6 +110,16 @@ export function Process() {
               </div>
             ))}
           </Reveal>
+        </div>
+
+        {/* Dica de arrasto embaixo e centralizada; só no carrossel mobile (some no grid sm+). */}
+        <div aria-hidden="true" className="mt-5 flex items-center justify-center gap-2.5 sm:hidden">
+          <span className="inline-flex w-9 shrink-0 justify-center">
+            <SwipeIcon size={22} className="text-brand-light animate-swipe" />
+          </span>
+          <span className="text-dim font-mono text-[10px] leading-none font-bold tracking-[.16em]">
+            ARRASTE PARA O LADO
+          </span>
         </div>
       </div>
     </section>

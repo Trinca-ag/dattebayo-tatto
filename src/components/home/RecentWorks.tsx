@@ -13,9 +13,18 @@ import type { Img } from "@/lib/image-sizes";
 
 type RecentPhoto = Img & { artistName: string; slug: string };
 
-/** Uma amostra por artista: a primeira foto da primeira obra do portfólio. */
+/**
+ * Índice da obra usada como amostra na home (padrão: a primeira, 0).
+ * Exceção: a 1ª obra do Luis é uma peça de peito quase idêntica à do Bruno —
+ * lado a lado parecem a mesma tatuagem repetida, então mostramos outra obra dele.
+ */
+const SAMPLE_WORK: Record<string, number> = {
+  luistattooer: 3, // Ryuk (Death Note), no lugar da peça de peito duplicada
+};
+
+/** Uma amostra por artista: a primeira foto da obra escolhida do portfólio. */
 const RECENT: RecentPhoto[] = ARTISTS.map((artist) => ({
-  ...artist.works[0].photos[0],
+  ...artist.works[SAMPLE_WORK[artist.slug] ?? 0].photos[0],
   artistName: artist.name,
   slug: artist.slug,
 }));
