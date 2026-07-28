@@ -118,8 +118,6 @@ fallback.
 
 Marcadas no código como `TODO(estúdio)`:
 
-- Confirmar o **@ oficial do Instagram** do estúdio (`INFO.igStudio`, hoje apontando para
-  `instagram.com`).
 - Substituir as **avaliações de exemplo** da home por depoimentos reais do Google.
 - Confirmar **ano de fundação, fundadores e marcos** citados na página Sobre.
 - Definir a `NEXT_PUBLIC_SITE_URL` de produção (o padrão em `src/lib/site.ts` é um palpite e

@@ -21,9 +21,8 @@ export const INFO = {
   maps: "https://www.google.com/maps/search/?api=1&query=R.%20Sen.%20Fel%C3%ADcio%20dos%20Santos%2C%20373%20-%20Liberdade%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001511-010",
   mapEmbed:
     "https://www.google.com/maps?q=R.%20Sen.%20Fel%C3%ADcio%20dos%20Santos%2C%20373%20-%20Liberdade%2C%20S%C3%A3o%20Paulo&output=embed",
-  // TODO(estúdio): confirmar o @ oficial do Instagram antes de publicar.
-  igStudio: "https://www.instagram.com/",
-  igStudioHandle: "@dattebayo.tattoo",
+  igStudio: "https://www.instagram.com/dattebayotattoo/",
+  igStudioHandle: "@dattebayotattoo",
   supply: "https://www.dattebayosupply.com.br/",
   /** Horário de funcionamento: Ter–Sáb 11:00–18:30 · Dom/Seg fechado. */
   hours: [

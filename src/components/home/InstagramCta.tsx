@@ -16,7 +16,6 @@ export function InstagramCta() {
             Flash days, novidades e o dia a dia do estúdio no Instagram.
           </p>
         </div>
-        {/* TODO(estúdio): confirmar o @ oficial do Instagram. */}
         <SolidCta
           href={INFO.igStudio}
           size="sm"

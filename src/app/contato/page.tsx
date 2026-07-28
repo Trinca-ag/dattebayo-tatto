@@ -102,7 +102,6 @@ export default function ContatoPage() {
 
                 <div>
                   <div className={CARD_LABEL}>INSTAGRAM</div>
-                  {/* TODO(estúdio): confirmar o @ oficial do Instagram. */}
                   <a
                     href={INFO.igStudio}
                     target="_blank"
