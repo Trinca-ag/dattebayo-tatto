@@ -150,7 +150,9 @@ export function Hero() {
         だってばよ
       </span>
 
-      <div className="relative mx-auto w-full max-w-[1280px] px-[clamp(18px,4vw,40px)] pb-[clamp(70px,10vh,120px)]">
+      {/* O piso do `pb` precisa passar dos 70px que o indicador de SCROLL ocupa a
+          partir da base — abaixo disso ele encosta nos CTAs em telas baixas. */}
+      <div className="relative mx-auto w-full max-w-[1280px] px-[clamp(18px,4vw,40px)] pb-[clamp(100px,10vh,120px)]">
         <Reveal className="mb-[22px]">
           <Eyebrow dashWidth={38}>EST. LIBERDADE — SÃO PAULO</Eyebrow>
         </Reveal>
