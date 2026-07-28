@@ -213,15 +213,17 @@
     border-radius: 4px;
   }
 
+  /* A classe no <html> vem de `RESPECT_REDUCED_MOTION` (src/lib/motion.ts): hoje o
+     site ignora a preferência do sistema, então este bloco fica desarmado. */
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    .respect-reduced-motion *,
+    .respect-reduced-motion *::before,
+    .respect-reduced-motion *::after {
       animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
     }
-    html {
+    html.respect-reduced-motion {
       scroll-behavior: auto;
     }
   }
@@ -270,8 +272,53 @@
   transform: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal="out"] {
+  .respect-reduced-motion [data-reveal="out"] {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Trabalhos recentes — pilha do mobile
+   Mesma ideia do reveal: sem JS (e antes da hidratação) as fotos são uma coluna
+   comum; o palco preso só entra quando o componente marca `data-stack="on"`.
+   As fotos ficam empilhadas na mesma célula do grid e o JS arremessa a de cima.
+   ───────────────────────────────────────────────────────────────────────────── */
+.work-stack[data-stack="on"] {
+  height: var(--stack-height);
+}
+.work-stack[data-stack="on"] .work-stage {
+  position: sticky;
+  top: 0;
+  /* Três faixas: título, palco das fotos e rodapé. Sem isso a foto ficava sozinha
+     no meio de uma tela inteira preta. */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  /* `svh` e não `dvh`: a barra do navegador aparecendo não pode remedir o palco. */
+  height: 100svh;
+  /* Em cima, o espaço do header fixo do site — 78px é a altura dele em repouso,
+     que é a maior; abaixo disso o eyebrow passaria por trás dele. */
+  padding-block: 86px 22px;
+}
+.work-stack[data-stack="on"] .work-head {
+  grid-area: 1 / 1;
+}
+.work-stack[data-stack="on"] .work-card {
+  /* Todas as fotos dividem a mesma célula: é isso que as empilha. */
+  grid-area: 2 / 1;
+  place-self: center;
+  /* A foto é quadrada, mas a tela do celular é alta: em 1:1 sobrava preto de mais.
+     O 4:5 ocupa a faixa e corta ~10% de cada lado; o `max-height` segura o card
+     dentro da faixa em telas mais baixas. */
+  width: min(100%, 460px);
+  aspect-ratio: 4 / 5;
+  max-height: 100%;
+  margin: 0;
+  transform-origin: 50% 85%;
+  will-change: transform, opacity;
+}
+.work-stack[data-stack="on"] .work-foot {
+  display: flex;
+  grid-area: 3 / 1;
 }

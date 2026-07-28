@@ -95,10 +95,15 @@ export function Process() {
             aria-hidden="true"
             className="absolute top-[14px] left-0 h-0.5 w-0 bg-[linear-gradient(90deg,var(--color-brand),var(--color-brand-deep))] shadow-[0_0_12px_rgba(255,92,0,.6)] transition-[width] duration-150 ease-linear"
           />
-          {/* Mobile: carrossel horizontal com snap (swipe nativo). sm+: volta ao grid. */}
+          {/* Mobile: carrossel horizontal com snap (swipe nativo). sm+: volta ao grid.
+              `relative z-1` é o que põe os cards na frente: as duas barras acima são
+              `absolute` e, sem isso, pintariam por cima dos números (elemento
+              posicionado sempre pinta depois de conteúdo estático). Com os cards na
+              frente, o fundo opaco de cada bolinha corta a trilha, que passa a correr
+              atrás delas. */}
           <Reveal
             delay={80}
-            className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] sm:gap-x-5 sm:gap-y-[26px] sm:overflow-visible sm:pb-0"
+            className="no-scrollbar relative z-1 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] sm:gap-x-5 sm:gap-y-[26px] sm:overflow-visible sm:pb-0"
           >
             {STEPS.map((step) => (
               <div key={step.n} className="flex-[0_0_78%] snap-start sm:flex-none">

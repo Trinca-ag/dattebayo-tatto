@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { REDUCED_MOTION_CLASS, RESPECT_REDUCED_MOTION } from "@/lib/motion";
 import { INFO, SITE_URL } from "@/lib/site";
 
 import "./globals.css";
@@ -88,6 +89,8 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const fonts = `${spaceGrotesk.variable} ${inter.variable} ${spaceMono.variable} ${zenKaku.variable}`;
+
   return (
     // `data-scroll-behavior="smooth"` faz o Next neutralizar o scroll suave durante a
     // troca de rota (o Next 16 deixou de fazer isso por padrão), mantendo o
@@ -95,7 +98,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="pt-BR"
       data-scroll-behavior="smooth"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${spaceMono.variable} ${zenKaku.variable}`}
+      // A classe só entra quando o site respeita `prefers-reduced-motion`; é ela
+      // que arma os blocos da media query no globals.css.
+      className={RESPECT_REDUCED_MOTION ? `${fonts} ${REDUCED_MOTION_CLASS}` : fonts}
     >
       <body className="bg-ink text-bone font-body antialiased">
         <a

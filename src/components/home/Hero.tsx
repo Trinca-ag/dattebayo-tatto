@@ -1,5 +1,6 @@
 "use client";
 
+import { preload } from "react-dom";
 import { useEffect, useRef } from "react";
 
 import { GhostCta, SolidCta } from "@/components/ui/CtaLink";
@@ -13,6 +14,12 @@ const VIDEO_CLASS =
 
 /** Abertura da home: dois clipes em crossfade, parallax leve e o CTA principal. */
 export function Hero() {
+  // O poster é o primeiro frame do clipe (13 KB): pinta o fundo antes de qualquer
+  // byte de vídeo chegar, e o vídeo entra por cima sem transição perceptível.
+  // Pelo `preload()` do react-dom em vez de um <link> no JSX porque só assim o
+  // `fetchPriority` sobrevive à hidratação.
+  preload("/hero-poster.webp", { as: "image", fetchPriority: "high" });
+
   const bgRef = useRef<HTMLDivElement>(null);
   const videoARef = useRef<HTMLVideoElement>(null);
   const videoBRef = useRef<HTMLVideoElement>(null);
@@ -43,8 +50,8 @@ export function Hero() {
     a.addEventListener("ended", onEndedA);
     b.addEventListener("ended", onEndedB);
 
-    // O segundo clipe tem 12,8 MB e só aparece quando o primeiro termina. Ele fica
-    // com `preload="none"` no HTML e só começa a baixar depois que o primeiro está
+    // O segundo clipe só aparece quando o primeiro termina. Ele fica com
+    // `preload="none"` no HTML e só começa a baixar depois que o primeiro está
     // rodando — antes disso estaria disputando banda com o LCP da página.
     const onPlayingA = () => b.load();
     a.addEventListener("playing", onPlayingA, { once: true });
@@ -103,10 +110,13 @@ export function Hero() {
         aria-hidden="true"
         className="bg-ink pointer-events-none absolute inset-0 [transform:scale(1.08)] will-change-transform"
       >
+        {/* `autoPlay` no HTML e não só no efeito: assim o navegador começa a tocar
+            durante o parse, sem esperar a hidratação do React. */}
         <video
           ref={videoARef}
           src="/hero-tattoo.mp4"
-          poster="/studio/lo1.webp"
+          poster="/hero-poster.webp"
+          autoPlay
           muted
           playsInline
           preload="auto"

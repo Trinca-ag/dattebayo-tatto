@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import { prefersReducedMotion } from "@/lib/motion";
+
 type RevealProps = {
   children: React.ReactNode;
   /** Atraso da transição, em ms, para escalonar itens irmãos. */
@@ -24,7 +26,7 @@ export function Reveal({ children, delay = 0, className, as: Tag = "div" }: Reve
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
 
     el.dataset.reveal = "out";
 

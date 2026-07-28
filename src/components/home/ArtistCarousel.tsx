@@ -183,14 +183,30 @@ export function ArtistCarousel() {
   // de um card, o que cancela o pointermove e congela o carrossel no meio do gesto.
   const onDragStart = (event: React.DragEvent<HTMLDivElement>) => event.preventDefault();
 
+  // Os mesmos tracinhos aparecem acima do carrossel no desktop e embaixo no mobile.
+  const dots = Array.from({ length: pages }, (_, i) => (
+    <span
+      key={i}
+      className="h-[2px] rounded-[2px] transition-[width,background-color] duration-300"
+      style={{
+        width: i === page ? 18 : 12,
+        background: i === page ? "var(--color-brand)" : "rgba(245,245,242,.24)",
+      }}
+    />
+  ));
+
   return (
     <section
       aria-label="A equipe"
       className="pt-[clamp(66px,9vw,120px)] pb-[clamp(56px,8vw,100px)]"
     >
-      <Reveal className="mx-auto flex max-w-[1280px] flex-wrap items-end justify-between gap-5 px-[clamp(18px,4vw,40px)]">
+      {/* No mobile o bloco todo (rótulo, título e botão) fica centralizado;
+          a partir de `sm` volta ao par título à esquerda / CTA à direita. */}
+      <Reveal className="mx-auto flex max-w-[1280px] flex-col items-center gap-5 px-[clamp(18px,4vw,40px)] text-center sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:text-left">
         <div>
-          <Eyebrow className="mb-4">A EQUIPE</Eyebrow>
+          <Eyebrow bookend className="mb-4 justify-center sm:justify-start">
+            A EQUIPE
+          </Eyebrow>
           <h2 className="font-display text-[clamp(30px,5vw,56px)] leading-[.98] font-bold tracking-[-.025em]">
             13 artistas. 13 universos.
           </h2>
@@ -200,26 +216,19 @@ export function ArtistCarousel() {
         </GhostCta>
       </Reveal>
 
-      <div className="mx-auto mt-3.5 flex max-w-[1280px] items-center justify-end gap-4 px-[clamp(18px,4vw,40px)] sm:justify-between">
-        {/* No mobile, a dica de arrasto vira a animação embaixo do carrossel. */}
-        <span className="text-dim font-mono hidden text-[10px] leading-none font-bold tracking-[.16em] sm:block">
+      {/* No mobile esta linha some: a dica vira a animação e os tracinhos descem
+          para baixo do carrossel. */}
+      <div className="mx-auto mt-3.5 hidden max-w-[1280px] items-center justify-between gap-4 px-[clamp(18px,4vw,40px)] sm:flex">
+        <span className="text-dim font-mono text-[10px] leading-none font-bold tracking-[.16em]">
           ◂ ARRASTE PARA EXPLORAR ▸
         </span>
         <div aria-hidden="true" className="flex shrink-0 gap-[5px]">
-          {Array.from({ length: pages }, (_, i) => (
-            <span
-              key={i}
-              className="h-[2px] rounded-[2px] transition-[width,background-color] duration-300"
-              style={{
-                width: i === page ? 18 : 12,
-                background: i === page ? "var(--color-brand)" : "rgba(245,245,242,.24)",
-              }}
-            />
-          ))}
+          {dots}
         </div>
       </div>
 
-      <div className="relative">
+      {/* No mobile a margem repõe o espaço da linha escondida acima. */}
+      <div className="relative mt-4 sm:mt-0">
         <div
           ref={scrollerRef}
           onScroll={handleScroll}
@@ -256,10 +265,15 @@ export function ArtistCarousel() {
         </button>
       </div>
 
-      {/* Dica de arrasto embaixo e centralizada; só no mobile (o desktop usa as setas). */}
+      {/* Tracinhos e dica de arrasto embaixo e centralizados; só no mobile
+          (o desktop usa as setas e a linha acima do carrossel). */}
+      <div aria-hidden="true" className="flex items-center justify-center gap-[5px] sm:hidden">
+        {dots}
+      </div>
+
       <div
         aria-hidden="true"
-        className="mt-1 flex items-center justify-center gap-2.5 px-[clamp(18px,4vw,40px)] sm:hidden"
+        className="mt-3 flex items-center justify-center gap-2.5 px-[clamp(18px,4vw,40px)] sm:hidden"
       >
         <span className="inline-flex w-9 shrink-0 justify-center">
           <SwipeIcon size={22} className="text-brand-light animate-swipe" />
