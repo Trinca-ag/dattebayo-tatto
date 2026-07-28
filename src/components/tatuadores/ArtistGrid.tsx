@@ -26,26 +26,45 @@ export function ArtistGrid({ artists }: { artists: Artist[] }) {
         aria-label="Filtrar por estilo"
         className="sticky top-[58px] z-40 border-y border-white/6 bg-[rgba(10,10,11,.82)] px-[clamp(18px,4vw,40px)] py-[14px] backdrop-blur-[12px]"
       >
-        <div className="mx-auto flex max-w-[1280px] flex-wrap items-center gap-2.5">
-          {FILTERS.map((f) => {
-            const on = f === filter;
-            return (
-              <button
-                key={f}
-                type="button"
-                aria-pressed={on}
-                onClick={() => setFilter(f)}
-                className={`inline-flex cursor-pointer items-center gap-[7px] rounded-full border px-[14px] py-[9px] font-mono text-xs leading-none font-bold tracking-[.04em] uppercase transition-colors duration-[250ms] ${
-                  on
-                    ? "bg-brand-gradient text-ink border-brand"
-                    : "text-mist border-white/16 bg-white/3 hover:border-white/30"
-                }`}
-              >
-                {f}
-                <span className="text-[10px] font-bold opacity-70">{countOf(f)}</span>
-              </button>
-            );
-          })}
+        <div className="mx-auto max-w-[1280px]">
+          {/* No mobile os sete chips quebram em três linhas e engordam a barra fixa;
+              o select nativo resolve em uma linha e abre o picker do sistema.
+              `color-scheme: dark` deixa esse picker no tom da página.
+              16px é proposital: abaixo disso o iOS dá zoom ao focar o campo. */}
+          <select
+            aria-label="Filtrar tatuadores por estilo"
+            value={filter}
+            onChange={(event) => setFilter(event.target.value as Filter)}
+            className="bg-field text-bone focus:border-brand w-full cursor-pointer rounded-xl border border-white/12 px-[14px] py-[11px] font-mono text-[16px] font-bold tracking-[.04em] uppercase transition-[border-color,box-shadow] duration-200 [color-scheme:dark] focus:shadow-[0_0_0_3px_rgba(255,92,0,.16)] focus-visible:outline-none sm:hidden"
+          >
+            {FILTERS.map((f) => (
+              <option key={f} value={f}>
+                {f} ({countOf(f)})
+              </option>
+            ))}
+          </select>
+
+          <div className="hidden flex-wrap items-center gap-2.5 sm:flex">
+            {FILTERS.map((f) => {
+              const on = f === filter;
+              return (
+                <button
+                  key={f}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => setFilter(f)}
+                  className={`inline-flex cursor-pointer items-center gap-[7px] rounded-full border px-[14px] py-[9px] font-mono text-xs leading-none font-bold tracking-[.04em] uppercase transition-colors duration-[250ms] ${
+                    on
+                      ? "bg-brand-gradient text-ink border-brand"
+                      : "text-mist border-white/16 bg-white/3 hover:border-white/30"
+                  }`}
+                >
+                  {f}
+                  <span className="text-[10px] font-bold opacity-70">{countOf(f)}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 
