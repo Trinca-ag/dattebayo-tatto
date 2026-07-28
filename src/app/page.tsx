@@ -4,7 +4,6 @@ import { ArtistCarousel } from "@/components/home/ArtistCarousel";
 import { WhatsAppFab } from "@/components/layout/WhatsAppFab";
 import { FinalCta } from "@/components/home/FinalCta";
 import { Hero } from "@/components/home/Hero";
-import { InstagramCta } from "@/components/home/InstagramCta";
 import { Marquee } from "@/components/home/Marquee";
 import { Perks } from "@/components/home/Perks";
 import { Process } from "@/components/home/Process";
@@ -31,7 +30,6 @@ export default function HomePage() {
       <Process />
       <StudioTeaser />
       <Reviews />
-      <InstagramCta />
       <FinalCta />
       <WhatsAppFab />
     </main>
